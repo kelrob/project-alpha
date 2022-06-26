@@ -1,15 +1,6 @@
 version: 2.1
 
 jobs:
-  build:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Basic Hello World"
-          command: echo "Hello World"
-
   create_infrastructure:
     docker:
       - image: amazon/aws-cli
