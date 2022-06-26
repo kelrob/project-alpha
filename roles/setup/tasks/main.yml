@@ -47,4 +47,4 @@
 
 - name: "Start the web Server"
   become: true
-  command: "pm2 start /web/index.js -f"
+  command: "pm2 start ~/web/index.js -f"
