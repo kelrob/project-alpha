@@ -4,6 +4,15 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.3
 
 jobs:
+  build:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Echo Hello World"
+          command: echo "Hello World"
+
   create_infrastructure:
     docker:
       - image: amazon/aws-cli
@@ -17,7 +26,8 @@ jobs:
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
 
-workflow:
+workflows:
   infra-workflow:
     jobs:
+      - build
       - create_infrastructure
