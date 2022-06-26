@@ -1,19 +1,19 @@
 version: 2.1
 
-orbs:
-  ansible-playbook: orbss/ansible-playbook@0.0.5
-
 jobs:
   configure_infrastructure:
     docker:
-      - image: cimg/python:3.10.5
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["6a:68:59:e7:24:78:0b:55:82:57:2a:f8:35:d7:14:ac"]
-
       - run:
-          name: Run Playbook and Configure server
+          name: "Install Ansible"
+          command: |
+            apk add --update ansible
+      - run:
+          name: "Run Playbook and Configure server"
           command: |
             ansible-playbook main.yml -i inventory
 
