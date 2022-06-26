@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook ansible-main.yml -i inventory
+            ansible-playbook -i inventory.txt ansible-main.yml
 
 workflows:
   infra-workflow:
