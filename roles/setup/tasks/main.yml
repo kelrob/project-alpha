@@ -1,0 +1,50 @@
+- name: "Update Apt Packages"
+  become: true
+  apt:
+    update_cache: yes
+
+- name: "Upgrade Packages"
+  become: true
+  apt:
+    upgrade: yes
+
+- name: remove dependencies that are no longer required
+  become: yes
+  apt:
+    autoremove: yes
+
+- name: "Install NodeJS"
+  become: true
+  apt:
+    name: ["nodejs"]
+    state: latest
+    update_cache: yes
+
+- name: "Install NPM"
+  become: true
+  apt:
+    name: ["npm"]
+    state: latest
+    update_cache: yes
+
+- name: "Install PM2"
+  npm:
+    name: pm2
+    global: yes
+
+- name: "Create web directory"
+  become: true
+  file:
+    path: ~/web
+    state: directory
+
+- name: "Copy files to web directory"
+  become: true
+  copy:
+    src: index.js
+    dest: "~/web/index.js"
+    backup: yes
+
+- name: "Start the web Server"
+  become: true
+  command: "pm2 start /web/index.js -f"

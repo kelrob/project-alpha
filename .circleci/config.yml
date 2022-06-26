@@ -1,33 +1,23 @@
 version: 2.1
 
-orbs:
-  aws-cli: circleci/aws-cli@2.0.3
-
 jobs:
-  build:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Echo Hello World"
-          command: echo "Hello World"
-
   create_infrastructure:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints: ["5d:7c:3b:82:f3:3b:62:3d:df:09:16:55:25:8e:d3:0a"]
       - run:
-          name: "Create Cloudformation Stack"
+          name: "Install Ansible"
           command: |
-            aws cloudformation deploy \
-              --template-file template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-              --region us-east-1
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook -i inventory.txt ansible-main.yml
 
 workflows:
   infra-workflow:
     jobs:
-      - build
       - create_infrastructure
