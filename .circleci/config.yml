@@ -17,7 +17,29 @@ jobs:
           command: |
             ansible-playbook main.yml -i inventory
 
+  smoke_test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run:
+          name: "Install Curl"
+          command: |
+            apk add --update curl
+      - run:
+          name: "Run Smoke Test"
+          command: |
+            URL="https://blog.udacity.com/"
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
+
 workflows:
   infra-workflow:
     jobs:
       - configure_infrastructure
+      - smoke_test:
+          requires:
+            - configure_infrastructure
