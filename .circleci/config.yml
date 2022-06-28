@@ -51,6 +51,7 @@ jobs:
           name: "Run Smoke Test and fail"
           command: |
             return 1
+      - destroy_environment
 
 workflows:
   infra-workflow:
