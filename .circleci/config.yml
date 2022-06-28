@@ -28,18 +28,15 @@ jobs:
       - run:
           name: "Run Smoke Test"
           command: |
-            URL="https://blogada.udacity.com/"
+            URL="https://blog.udacity.com/"
             if curl -s --head ${URL} 
-            then
-              return 0
-            else
-              return 1
-            fi
+          then
+            return 0
+          else
+            return 1
+          fi
 
 workflows:
   infra-workflow:
     jobs:
       - configure_infrastructure
-      - smoke_test:
-          requires:
-            - configure_infrastructure
