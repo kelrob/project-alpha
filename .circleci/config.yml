@@ -14,6 +14,10 @@ jobs:
               --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides MyBucketName="project-alpha-bucket-manual-${CIRCLE_WORKFLOW_ID:0:7}" \
               --region us-east-1
+      - run:
+          name: Upload Index.html
+          command: |
+            aws s3 cp index.html s3://project-alpha-bucket-manual-${CIRCLE_WORKFLOW_ID:0:7}
 
   get_last_deployment_id:
     docker:
