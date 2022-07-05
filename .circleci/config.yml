@@ -12,7 +12,7 @@ jobs:
             aws cloudformation deploy \
               --template-file bucket.yml \
               --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
-              --parameter-overrides MyBucketName="my-circleci-proj-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides MyBucketName="project-alpha-bucket-manual-${CIRCLE_WORKFLOW_ID:0:7}" \
               --region us-east-1
 
   get_last_deployment_id:
@@ -43,7 +43,7 @@ jobs:
             aws cloudformation deploy \
             --template-file cloudfront.yml \
             --stack-name production-distro \
-            --parameter-overrides PipelineID="my-circleci-proj-${CIRCLE_WORKFLOW_ID:0:7}"
+            --parameter-overrides PipelineID="project-alpha-bucket-manual-${CIRCLE_WORKFLOW_ID:0:7}"
 
   clean_up_old_front_end:
     docker:

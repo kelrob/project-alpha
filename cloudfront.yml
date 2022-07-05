@@ -1,6 +1,6 @@
 Parameters:
   PipelineID:
-    Description: my-circleci-proj
+    Description: project-alpha-bucket-manual
     Type: String
 
 Resources:
